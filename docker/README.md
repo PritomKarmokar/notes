@@ -31,3 +31,17 @@
 - Makes your life easy when you're setting up project locally.
 - Makes it easier to deploy `containers`. 
 - Allows for `container orchestration` which makes `deployment` a breeze. `[Kubernetes]`
+
+## Inside `Docker`
+- `Docker` has 3 parts
+    - `CLI`
+    - `Engine`
+    - `Registry` (Dockerhub)
+
+![Inside Docker](media/docker_part.png)
+- Instead of `code` `DockerHub` contains `images` that are going to be deployed.
+- Once a developer created an image, they can deploy it to `dockerhub`.
+- `AWS`, `GCP` can pull your image from the `Dockerhub` and run it immediately.
+- **DockerHub isn't the only registry**
+    - `AWS`, `GCP` both of them has their own registry.
+    - **DockerHub is the most popular registry**
