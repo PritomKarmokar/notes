@@ -81,5 +81,50 @@ CMD ["node", "index.js"]
 ```
 ![Docker Image](media/dockerFile.png)
 
-- First 5 steps run at **build time** (creating the image)
+- First 4 steps run at **build time** (creating the image)
 - Last command runs at **runtime** (when the container starts)
+- **The last `two` steps doesn't run when you're creating an `Image`. It runs when you're running the `Image`**
+
+## Important Questions
+- **Should you copy over `node_modules` from your file system over to the `Docker` image?**
+    - Yes. You should copy over `package.json` and inside the images where you run `npm install`
+    - Search the proper explanation and add `here`
+
+- **What's the difference between `CMD` and `RUN` ?**
+    -  `RUN` means install bunch of things inside the container
+    - `CMD` means before the `image` gets converted into a container, you actually start the container and run this
+
+- **How can you create an `image` from the `Dockerfile` ?**
+    - ```docker build . -t <image_tag>```
+    - provide `image_tag` name as your need
+
+- **How to create `Image` from `dockerfile` and run this `image` ?**
+    - ```docker run test_app```
+    - But since we haven't expose `port` so won't access it
+
+![Docker Image](media/docker_run.png)
+
+- **How you can push your `Image` to `DockerHub` ?**
+    - see the references on `google` :(
+
+- **Can anyone from the Internet use my Image by pulling it from the `Dockerhub` ?**
+    - Yes. But here need `port mapping`
+    - After pulling the image and adding proper port mappingg they can run and access the `api's` from that particular `image`
+
+## Command Recap
+```
+docker build . -t <tag_name>
+```
+```
+dockr run <tag_name>
+```
+```
+docker login
+```
+```
+docker push <tag_name>
+```
+```
+docker pull <tag_name>
+```
+
