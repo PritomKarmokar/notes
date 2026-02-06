@@ -128,3 +128,26 @@ docker push <tag_name>
 docker pull <tag_name>
 ```
 
+
+
+# `Docker` Part-02
+## Topics Covered
+- Caching images, layers in docker
+- `Volumes` and `Networks`, adding `DB`
+- Multi stage builds
+- Understanding `docker compose`
+- Creating `docker compose` 
+
+## `Caching` and `Layers`
+- Sample `Dockerfile`
+```
+FROM node:20
+WORKDIR /usr/src/app
+COPY . .
+RUN npm install
+EXPOSE 8000
+CMD ["node", "index.js"]
+```
+- When you run `docker build .` docker starts to create these layers one by one
+
+![Docker Image](media/docker_layer.png)
