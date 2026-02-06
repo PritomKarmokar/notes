@@ -79,3 +79,7 @@ RUN npm install
 EXPOST 3000
 CMD ["node", "index.js"]
 ```
+![Docker Image](media/dockerFile.png)
+
+- First 5 steps run at **build time** (creating the image)
+- Last command runs at **runtime** (when the container starts)
