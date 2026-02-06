@@ -27,7 +27,7 @@
 - `Containarization` involves building self sufficiant software packages that perform consistently, regardless of the `machines` they run on.
 - **It's basically taking the snapshot of a machine, the filesystem and letting you use and deploy it as a construct**
 
-## why `Docker` ?
+## Why `Docker` ?
 - Makes your life easy when you're setting up project locally.
 - Makes it easier to deploy `containers`. 
 - Allows for `container orchestration` which makes `deployment` a breeze. `[Kubernetes]`
@@ -37,6 +37,7 @@
     - `CLI`
     - `Engine`
     - `Registry` (Dockerhub)
+        - It is the place where you can store your project's `image`
 
 ![Inside Docker](media/docker_part.png)
 - Instead of `code` `DockerHub` contains `images` that are going to be deployed.
@@ -45,3 +46,36 @@
 - **DockerHub isn't the only registry**
     - `AWS`, `GCP` both of them has their own registry.
     - **DockerHub is the most popular registry**
+
+## `Image` Vs `Containers`
+![Docker Image](media/docker_image.png)
+- `Image` is an Independent entity which has not just your source code, but also the `dependencies` your source code needs to run.
+- We can use this `image` on `Windows`, `Linux` or `Mac` machine without any problem.
+- **When we run this image then it's called `Container`**
+- **An Image in execution is called `Container`**
+- We can then push this image into `DockerHub` 
+
+![Docker Image](media/docker_container.png)
+
+- [Github Link](https://github.com/hkirat/docker-roadmap)
+
+- Here a simple http server of `node.js` has been `dockerized`.
+- `Exercise` 
+    - Check for `python` and `golang` based services
+
+## `Dockerfile`
+- This is where you tell your full stack application what `dependencies` you need for the project to run ?
+- What external libraries do you need ?
+- What parts do you need to expose ?
+- What final command you need to run to convert your `image` inito a running `container` ?
+- Where can you find your project specific files ?
+
+## Sample `Node.js` DockerFile
+```
+FROM node:20
+WORKDIR /usr/src/app
+COPY . .
+RUN npm install
+EXPOST 3000
+CMD ["node", "index.js"]
+```
