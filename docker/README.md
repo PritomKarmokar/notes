@@ -151,3 +151,18 @@ CMD ["node", "index.js"]
 - When you run `docker build .` docker starts to create these layers one by one
 
 ![Docker Image](media/docker_layer.png)
+
+## Why `layers` ?
+- Caching
+- Re-using layers
+- Faster build times
+
+## Task 01: Figure out a way to make `Docker` build faster
+
+![Docker Image](media/task_01_solution.png)
+
+- But `why` `package.json` is copying over before other files ?
+    - Based on the `packages` listed on `package.json` **RUN npm install** installs all the necessary dependencies
+    - In Any `JS` based projects `package.json` doesn't changes often
+    - For `Python` it is similar to `requirements.txt`
+    - Since only the last layer changes for this reason `COPY . .`
