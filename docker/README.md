@@ -303,3 +303,68 @@ docker build . --target development -t myapp:dev
 docker run myapp:dev
 ```
 ![Docker Image](media/multi_stage_build_2.png)
+
+## `Note`
+- Now, suppose the `DB` url specified in the `dev` or `prod` image is `localhost` but we're running a `mongodb` container named `mongdb2`
+- But if we want to make changes in the `db` urls of `index.js` file the `dev` environment's server worn't restart cause now the files are running on their own container
+- For the images the make the changing reflect we need to enter the `shell` of the current container and make changes in the `index.js` file there
+
+## Command for Entering into `contaier's` shell
+```
+sudo docker exec -it <container_id> sh
+```
+
+- But if we apply the below command then the changes will be reflected in the `local` as well as in the container
+```
+docker run -v .:/usr/src/app app:dev
+```
+
+## Docker `Compse`
+- If the dependencis of the auxiliary services are getting higher then to manually maintain docker `network`, `volume` gets really difficult
+- The solution is `Docker Compose`
+    - **Compose bunch of images/containers together**
+
+## The Problem
+- A project has a lot of auxiliary services it needs to use
+    - For example, `MongoDB/Postgres/Kafka/MySQL`
+
+## Bad Solution
+- Run multiple `docker run` commands
+- You can run them in multiple terminals or use `detached` mode
+
+## Good Solution -> `Docker Compose`
+- Compose is a tool for defining and running `multi container` Docker applications 
+- With compose, you can use a `YAML` file to configure your application services
+- Then with a single command, you can create and start all the services from your configurations
+
+## Sample `Docker compose` file
+```
+services:
+  mongodbi_db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+  custom_app:
+    build: ./
+    ports:
+      - "3000:3000"
+
+volumes:
+  mongodb-data:
+```
+## Useful Commands
+```
+docker compose up
+```
+```
+docker compose down
+```
+```
+docker-compose up --build
+```
+
+## Todos
+- add dockerfiles for `python`, `go` projects
+- review the notes and make changes if necessary
