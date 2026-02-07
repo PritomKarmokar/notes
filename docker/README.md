@@ -215,3 +215,18 @@ docker kill <container_id>
 docker volume rm volume_database
 ```
 ![Docker Image](media/docker_volume_command.png)
+
+## What is `Network` ?
+- When we're running `codebase` locally, then backend can easily interact with the `Database`
+- Let's say, `MongoDB` connection is
+```
+mongodb://localhost:27017/mydatabase
+```
+- Here, `DB` connection port is defined by my device
+
+- **But when `Backend code` and `Database` both of them are running separately on container the `problem` occurs**
+- Cause, each container has its own network since each `container` is isolated, separately working as individual `mini` machine
+- So, that mini machine has it's own `localhost` but that localhost connection isn't the `isolated` database container's connection
+- One container can't talk to the host machine on to other container
+- **How can the Backend talk to the MongoDB then ?**
+    - Answer is `MongoDB`
