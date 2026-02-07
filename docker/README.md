@@ -260,3 +260,46 @@ docker run -v volume_database:/data/db --name mongo --network my_custom_network 
 ![Docker Image](media/docker_network_4.png)
 
 ![Docker Image](media/docker_network_5.png)
+
+## `Env` Variables - Why?
+- The problems
+    - It is difficult to keep `editing` files
+    - You should not check in database urls
+        - `DB Secrets` should not be `hardcoded` and `open` to use
+    - `Env` variables are language independent construct to send secrets to process
+
+## `Multi Stage` Builds
+- What if we want to allow `dev` backend to allow `hot reload` but the `prod` env to not?
+
+## Example `Dockerfile`
+```
+FROM node:20 AS base
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+
+FROM base AS development
+COPY . .
+CMD ["npm", "run", "dev"]
+
+FROM base AS production
+COPY . .
+RUN npm prune --production
+CMD ["npm", "run", "start"]
+```
+
+- **Note: based on the `base image` vim or other dependencies listed in the container or not depends**
+
+![Docker Image](media/multi_stage_build.png)
+
+- **By slightly modifying `docker build or run` commands we can run or build `dev` or `prod` image**
+
+## Commands for building and running `multi stage` image
+```
+docker build . --target development -t myapp:dev
+```
+
+```
+docker run myapp:dev
+```
+![Docker Image](media/multi_stage_build_2.png)
