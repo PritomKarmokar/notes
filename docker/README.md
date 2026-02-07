@@ -257,3 +257,6 @@ docker run -p 3000:3000 --name backend --network my_custom_network <image_tag>
 ```
 docker run -v volume_database:/data/db --name mongo --network my_custom_network -p 27017:27017 mongo
 ```
+![Docker Image](media/docker_network_4.png)
+
+![Docker Image](media/docker_network_5.png)
