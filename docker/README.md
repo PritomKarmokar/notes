@@ -166,3 +166,52 @@ CMD ["node", "index.js"]
     - In Any `JS` based projects `package.json` doesn't changes often
     - For `Python` it is similar to `requirements.txt`
     - Since only the last layer changes for this reason `COPY . .`
+
+## Advantages of `Docker`
+- Instead of manually installing `DBs/Redis/Auxiliary Services` we can use them via `Docker`
+- It's very much useful so we don't pollute our filesystem with unnecessary dependencies
+- We can easily bring up and down `DBs/Redis/Auxiliary Services/Kafka` and clean out our machine
+
+## But there has also `downside` of this approach
+- **We want local databases to retain information across restarts (`Volume`)**
+    - Databases need to persist data
+- **We want to allow one docker container to talk to another docker container (`Networks`)**
+    - But isn't this becoming counter intuitive cause every docker container must remain separate?
+
+- A backend container might need to talk to `mongodb` container
+    - How does it do that?
+        - Here comes `Network`
+
+![Docker Image](media/docker_network.png)
+
+## `Volumes`
+- Used for `persisting` data across starts
+- Specifically useful for things like `databases`
+
+![Docker Image](media/docker_volume.png)
+
+## What is `Volume` ?
+- It is a `logical` place where you can `dump` data
+- If you ever bring down a container the volume space actually stays. Until you bring down the volume
+
+## Commands for creating and using volume
+- Command for creating volume
+    - this persists until you delete the volume
+```
+docker volume create volume_database
+```
+```
+docker run -v volume_database:/data/db -p 27017:27017 mongo
+```
+```
+docker exec -it container_id /bin/bash
+```
+- **Command for killing container**
+```
+docker kill <container_id>
+```
+- **Command for removing volume**
+```
+docker volume rm volume_database
+```
+![Docker Image](media/docker_volume_command.png)
