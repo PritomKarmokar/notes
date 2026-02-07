@@ -230,3 +230,30 @@ mongodb://localhost:27017/mydatabase
 - One container can't talk to the host machine on to other container
 - **How can the Backend talk to the MongoDB then ?**
     - Answer is `MongoDB`
+
+## `Docker Network`
+- For one container to talk to another container we need  to give them some logical binding Which is known as `Network`
+
+![Docker Image](media/docker_network_2.png)
+
+- Each container have their own network
+- What is `network` ?
+    - `localhost`
+    - `127.0.0.1`
+    - `https:google.com`
+
+- One container can't talk to the host machine on to other machine
+- They need a way to talk to the `DB` instance let's say `mongodb`
+
+![Docker Image](media/docker_network_3.png)
+
+## Command for `Networks`
+```
+docker network create my_custom_network
+```
+```
+docker run -p 3000:3000 --name backend --network my_custom_network <image_tag>
+```
+```
+docker run -v volume_database:/data/db --name mongo --network my_custom_network -p 27017:27017 mongo
+```
