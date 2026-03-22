@@ -368,3 +368,8 @@ docker-compose up --build
 ## Todos
 - add dockerfiles for `python`, `go` projects
 - review the notes and make changes if necessary
+
+## Resources (Python Specific)
+- [How to dockerize django app](https://www.docker.com/blog/how-to-dockerize-django-app/)
+- [The near perfect dockerfile for django app](https://siddharthsahu.com/the-near-perfect-dockerfile-for-django-applications)
+- [Production Ready Dockerfile for django with redis, postgres, nginx](https://medium.com/@sizanmahmud08/production-ready-django-with-docker-in-2026-complete-guide-with-nginx-postgresql-and-best-1fb248e65983)
