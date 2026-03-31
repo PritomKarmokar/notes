@@ -4,63 +4,63 @@
 class Node:
     def __init__(self, start, end):
         self.val = None
-        self.range_start = start
-        self.range_end = end
+        self.start = start
+        self.end = end
         self.left = None
         self.right = None
 
-def construct_tree(data, start, end):
+def make_segment_tree(data, start, end):
     if start == end:
-        node = Node(start, end)
-        node.val = data[start]
-        return node
+        leaf = Node(start, end)
+        leaf.val = data[start]
+        return leaf
     
-    mid = ( start + end ) // 2
+    mid = (start + end) // 2
     
     node = Node(start, end)
-    node.left = construct_tree(data, start, mid)
-    node.right = construct_tree(data, mid + 1, end)
+    node.left = make_segment_tree(data, start, mid)
+    node.right = make_segment_tree(data, mid + 1, end)
     node.val = node.left.val + node.right.val
 
     return node
 
-def query(node, start, end):
+def query(node, qs, qe):
     if node is None:
         return 0
-
-    print(f"Visiting node [{node.range_start}, {node.range_end}] with query [{start}, {end}]")
-
-    if node.range_start >= start and node.range_end <= end:
-        return node.val
-
-    if node.range_end < start or node.range_start > end:
+    
+    if node.end < qs and node.start > qe:
         return 0
-
-    return query(node.left, start, end) + query(node.right, start, end)
+    
+    if node.start >= qs and node.end <= qe:
+        return node.val
+    
+    left_sum = query(node.left, qs, qe)
+    right_sum = query(node.right, qs, qe)
+    
+    return left_sum + right_sum
 
 def pre_order_traversal(node):
     if not node:
-        return 
+        return
     
     print(node.val, end=" ")
-
+    
     if node.left:
         pre_order_traversal(node.left)
-    
+
     if node.right:
         pre_order_traversal(node.right)
 
-
 if __name__ == "__main__":
-    data = [3, 4, 9, 12]
+    data = [1, 4, 5, 9, 10, 12]
     length = len(data)
+    root = make_segment_tree(data, 0, length - 1)
 
-    print("Constructing Segment Trees : ")
-    root = construct_tree(data, 0, length - 1)
-    
-    print("Segment Tree Traversal: ")
+    print("Pre-order traversal of the segment tree:")
     pre_order_traversal(root)
-    print()
-    
+    print(end="\n")
+
+    result = query(root, 2, 4)
+    print("Query sum from index 2 to 4:", result)
     result = query(root, 1, 2)
     print(f"result: {result}")
