@@ -22,6 +22,25 @@ def is_palindrome_permutation(pharse: str) -> bool:
             
     return True
 
+# Check these slight optimization
+def is_palindrome_permutation_v2(pharse: str) -> bool:
+    if len(pharse)  == 0:
+        return True
+
+    pharse = pharse.lower()
+    freq = {}
+    oddCount = 0
+
+    for ch in pharse:
+        if ch >= 'a' and ch <= 'z':
+            freq[ch] = freq.get(ch, 0) + 1
+            if freq[ch] % 2 == 1:
+                oddCount += 1
+            else:
+                oddCount -= 1
+
+    return oddCount <= 1
+
 pharse = "Tact Coa"
 if is_palindrome_permutation(pharse):
     print("It's a palindrome")
